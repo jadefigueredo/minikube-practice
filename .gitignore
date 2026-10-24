@@ -1,1 +1,1 @@
-mongo-secret.yaml
+k8s/.env.secret
