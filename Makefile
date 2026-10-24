@@ -1,5 +1,5 @@
 NAMESPACE := minikube-practice
-SECRET    := k8s/.env.secret
+SECRET    := k8s/mongo-secret.txt
 
 .DEFAULT_GOAL := help
 
@@ -12,7 +12,7 @@ start: ## Sobe o cluster local no minikube
 	minikube start --cpus=2 --memory=4096
 
 $(SECRET):
-	cp k8s/.env.secret.example $(SECRET)
+	cp k8s/mongo-secret.example.txt $(SECRET)
 	@echo "Criei $(SECRET) a partir do exemplo. Troque a senha antes de usar fora do seu computador."
 
 .PHONY: deploy

@@ -27,7 +27,7 @@ Tudo fica no namespace `minikube-practice`.
 | `mongo` Deployment | MongoDB 8.0, estratégia `Recreate` | O volume é ReadWriteOnce: o pod antigo precisa sair antes do novo montar |
 | `mongo-data` PVC | 1Gi | Os dados sobrevivem a restart e redeploy do pod |
 | `mongo-service` | ClusterIP 27017 | Banco acessível só de dentro do cluster |
-| `mongo-secret` | gerado pelo Kustomize a partir de `k8s/.env.secret` | Credenciais fora do Git; o nome leva um hash do conteúdo, então trocar a senha reinicia os pods |
+| `mongo-secret` | gerado pelo Kustomize a partir de `k8s/mongo-secret.txt` | Credenciais fora do Git; o nome leva um hash do conteúdo, então trocar a senha reinicia os pods |
 | `mongo-config` | gerado pelo Kustomize | Endereço do banco para a aplicação |
 
 ### Probes
@@ -49,14 +49,14 @@ Pré-requisitos: [minikube](https://minikube.sigs.k8s.io/docs/start/) e `kubectl
 
 ```bash
 make start    # sobe o minikube
-make deploy   # cria k8s/.env.secret a partir do exemplo, aplica tudo e espera os pods
+make deploy   # cria k8s/mongo-secret.txt a partir do exemplo, aplica tudo e espera os pods
 make url      # imprime a URL da aplicação
 make smoke    # testa a aplicação via port-forward
 make status   # pods, services e volume
 make delete   # remove o namespace (inclusive os dados)
 ```
 
-Antes do primeiro `make deploy`, se quiser outra senha, copie `k8s/.env.secret.example` para `k8s/.env.secret` e edite. Esse arquivo está no `.gitignore`.
+Antes do primeiro `make deploy`, se quiser outra senha, copie `k8s/mongo-secret.example.txt` para `k8s/mongo-secret.txt` e edite. Esse arquivo está no `.gitignore`.
 
 ## CI
 
