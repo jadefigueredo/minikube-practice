@@ -1,0 +1,25 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: minikube-practice
+
+labels:
+  - pairs:
+      app.kubernetes.io/part-of: minikube-practice
+
+resources:
+  - namespace.yaml
+  - mongo.yaml
+  - webapp.yaml
+
+configMapGenerator:
+  - name: mongo-config
+    literals:
+      - mongo-url=mongo-service
+
+# Credentials come from a local, git-ignored file (see mongo-secret.example.txt).
+# The generated name carries a content hash, so changing a password rolls the pods.
+secretGenerator:
+  - name: mongo-secret
+    envs:
+      - mongo-secret.txt
